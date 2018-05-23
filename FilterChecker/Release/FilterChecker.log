@@ -1,0 +1,12 @@
+﻿  FilterChecker.cpp
+FilterChecker.cpp(70): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+FilterChecker.cpp(71): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+  Generating code
+  116 of 117 functions (99.1%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  FilterChecker.vcxproj -> C:\Users\eryn0_000.DELL8500.000\Desktop\Cool Programs\FilterChecker\Release\FilterChecker.dll
+  FilterChecker.vcxproj -> C:\Users\eryn0_000.DELL8500.000\Desktop\Cool Programs\FilterChecker\Release\FilterChecker.pdb (Full PDB)
