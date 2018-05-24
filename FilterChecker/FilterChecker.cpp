@@ -6,18 +6,20 @@
 
 #include "Includes.h"
 
-int dataModelAddress = 0x1103808; // Address last updated: 5/23/18
-
 DWORD base = (DWORD)GetModuleHandle(L"RobloxPlayerBeta.exe");
 DWORD aslr(int address)
 {
 	return (address - 0x400000 + base);
 }
 
+int dataModelAddress = aslr(0x1103808); // Address last updated: 5/23/18
+
 void consoleBypass()
 {
 	DWORD nothing;
+
 	VirtualProtect((PVOID)&FreeConsole, 1, PAGE_EXECUTE_READWRITE, &nothing);
+
 	*(BYTE*)(&FreeConsole) = 0xC3;
 }
 
@@ -69,26 +71,31 @@ void console(char* name)
 	SetConsoleTitleA(name);
 	freopen("CONOUT$", "w", stdout);
 	freopen("CONIN$", "r", stdin);
+
 	HWND ConsoleHandle = GetConsoleWindow();
+
 	::SetWindowPos(ConsoleHandle, HWND_TOPMOST, 0, 0, 0, 0, SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 	::ShowWindow(ConsoleHandle, SW_NORMAL);
 }
 
 void scan()
 {
-	DWORD dataModelA = aslr(dataModelAddress);
-
-	roblox::dataModel = memory::scan(PAGE_READWRITE, (char*)&dataModelA, "xxxx");
+	roblox::dataModel = memory::scan(PAGE_READWRITE, (char*)&dataModelAddress, "xxxx");
 	roblox::workspace = roblox::findFirstChild_PartOf(roblox::dataModel, "Workspace");
 }
 
 int main()
 {
 	std::string key = "check";
+
 	consoleBypass();
+
 	console("FilterChecker - Made by IcyJake/GhostX @ V3rmillion");
+
 	std::cout << "Loading...\n\n";
+
 	scan();
+
 	std::cout << "Welcome to FilterChecker!\n\n\n\n";
 	std::cout << "Please type 'check' to check a game's filter.\n\n";
 	std::cin >> key;
@@ -98,13 +105,15 @@ int main()
 	{
 		std::cout << "[Error] -> Please restart and type 'check'.\n\n";
 	}
+	
 	if (key == "check")
 	{
 		if (roblox::filterCheck())
 		{
 			std::cout << "[Success] -> Filtering is enabled! :(\n";
 		}
-		else
+		
+		if (!roblox::filterCheck())
 		{
 			std::cout << "[Success] -> Filtering is disabled! :)\n";
 		}
@@ -130,6 +139,7 @@ BOOL WINAPI DllMain(HINSTANCE hModule, DWORD dwReason, LPVOID lpReserved)
 
 				return FALSE;
 			}
+
 			CloseHandle(hThread);
 		}
 		else if (dwReason == DLL_PROCESS_DETACH) {}
